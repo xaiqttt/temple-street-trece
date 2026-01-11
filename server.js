@@ -8,10 +8,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // SECURITY: Admin key should be in environment variable for production
-// Generate a secure key: node -e "console.log(crypto.randomBytes(32).toString('hex'))"
 const ADMIN_KEY = process.env.ADMIN_KEY || 'TST13ADMIN2025';
 
-// Store active admin sessions (in production, use Redis or similar)
+// Store active admin sessions
 const activeSessions = new Map();
 
 // Session timeout (30 minutes)
@@ -22,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// Rate limiting for admin endpoints (simple implementation)
+// Rate limiting for admin endpoints
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const MAX_ATTEMPTS = 5;
@@ -53,7 +52,6 @@ function verifySession(sessionToken) {
     const session = activeSessions.get(sessionToken);
     if (!session) return false;
 
-    // Check if session expired
     if (Date.now() - session.createdAt > SESSION_TIMEOUT) {
         activeSessions.delete(sessionToken);
         return false;
@@ -62,7 +60,7 @@ function verifySession(sessionToken) {
     return true;
 }
 
-// Clean up expired sessions periodically
+// Clean up expired sessions
 setInterval(() => {
     const now = Date.now();
     for (const [token, session] of activeSessions.entries()) {
@@ -70,7 +68,7 @@ setInterval(() => {
             activeSessions.delete(token);
         }
     }
-}, 5 * 60 * 1000); // Every 5 minutes
+}, 5 * 60 * 1000);
 
 // GitHub storage config
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -78,7 +76,7 @@ const REPO = process.env.GITHUB_REPO;
 const FILE_PATH = process.env.GITHUB_FILE_PATH;
 const BRANCH = process.env.GITHUB_BRANCH;
 
-// Get current SHA of the file (needed for updates)
+// Get current SHA of the file
 async function getFileSHA() {
     const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`, {
         headers: { Authorization: `token ${GITHUB_TOKEN}` },
@@ -125,7 +123,6 @@ async function writeFunds(data) {
 
 // API Routes
 
-// Get funds (PUBLIC - no auth required)
 app.get('/api/funds', async (req, res) => {
     try {
         const data = await readFunds();
@@ -135,22 +132,18 @@ app.get('/api/funds', async (req, res) => {
     }
 });
 
-// Update funds (REQUIRES VALID SESSION TOKEN)
 app.post('/api/funds', async (req, res) => {
     try {
         const { sessionToken, data } = req.body;
 
-        // Verify session token (NOT admin key!)
         if (!verifySession(sessionToken)) {
             return res.status(401).json({ error: 'Unauthorized - Invalid or expired session' });
         }
 
-        // Validate data structure
         if (!data || !data.funds || !data.summary) {
             return res.status(400).json({ error: 'Invalid data structure' });
         }
 
-        // Additional validation: ensure all amounts are numbers
         for (const fundKey in data.funds) {
             const fund = data.funds[fundKey];
             if (!fund.members || !Array.isArray(fund.members)) {
@@ -167,12 +160,10 @@ app.post('/api/funds', async (req, res) => {
             }
         }
 
-        // Validate summary
         if (typeof data.summary.pman !== 'number' || typeof data.summary.hawak !== 'number') {
             return res.status(400).json({ error: 'Invalid summary data' });
         }
 
-        // Save data
         await writeFunds(data);
         res.json({ success: true, message: 'Funds updated successfully' });
     } catch (error) {
@@ -181,26 +172,22 @@ app.post('/api/funds', async (req, res) => {
     }
 });
 
-// Admin login - verify key and create session
 app.post('/api/admin/login', async (req, res) => {
     try {
         const { adminKey } = req.body;
         const clientIp = req.ip || req.connection.remoteAddress;
 
-        // Check rate limit
         if (!checkRateLimit(clientIp)) {
             return res.status(429).json({
                 error: 'Too many login attempts. Please try again later.'
             });
         }
 
-        // Verify admin key
         if (adminKey !== ADMIN_KEY) {
             console.log(`Failed login attempt from ${clientIp}`);
             return res.status(401).json({ error: 'Invalid admin key' });
         }
 
-        // Create session token
         const sessionToken = generateSessionToken();
         activeSessions.set(sessionToken, {
             createdAt: Date.now(),
@@ -220,7 +207,6 @@ app.post('/api/admin/login', async (req, res) => {
     }
 });
 
-// Verify session (for frontend to check if still logged in)
 app.post('/api/admin/verify', async (req, res) => {
     try {
         const { sessionToken } = req.body;
@@ -235,7 +221,6 @@ app.post('/api/admin/verify', async (req, res) => {
     }
 });
 
-// Admin logout - invalidate session
 app.post('/api/admin/logout', async (req, res) => {
     try {
         const { sessionToken } = req.body;
@@ -251,7 +236,6 @@ app.post('/api/admin/logout', async (req, res) => {
     }
 });
 
-// Health check
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'OK',
@@ -260,12 +244,10 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-// Serve index.html for root path
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start server
 app.listen(PORT, () => {
     console.log(`
 ╔═══════════════════════════════════════════════════════╗
