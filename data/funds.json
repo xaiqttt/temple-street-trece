@@ -1,0 +1,122 @@
+{
+  "funds": {
+    "ns": {
+      "title": "PONDO FOR NS(NORTHSIDE)",
+      "target": 75,
+      "members": [
+        {
+          "name": "Jess",
+          "amount": 75
+        },
+        {
+          "name": "Reb",
+          "amount": 75
+        },
+        {
+          "name": "Darwin",
+          "amount": 75
+        },
+        {
+          "name": "Chad",
+          "amount": 75
+        },
+        {
+          "name": "David",
+          "amount": 75
+        },
+        {
+          "name": "Jerome",
+          "amount": 75
+        },
+        {
+          "name": "El uno",
+          "amount": 75
+        },
+        {
+          "name": "Johnroo",
+          "amount": 75
+        }
+      ]
+    },
+    "la": {
+      "title": "PONDO FOR LA",
+      "target": 75,
+      "members": [
+        {
+          "name": "Jess",
+          "amount": 75
+        },
+        {
+          "name": "Reb",
+          "amount": 15
+        },
+        {
+          "name": "Darwin",
+          "amount": 30
+        },
+        {
+          "name": "Chad",
+          "amount": 25
+        },
+        {
+          "name": "David",
+          "amount": 75
+        },
+        {
+          "name": "Jerome",
+          "amount": 75
+        },
+        {
+          "name": "El uno",
+          "amount": 75
+        },
+        {
+          "name": "Johnroo",
+          "amount": 75
+        }
+      ]
+    },
+    "pintura": {
+      "title": "PINTURA",
+      "target": 30,
+      "members": [
+        {
+          "name": "Jess",
+          "amount": 0
+        },
+        {
+          "name": "Reb",
+          "amount": 0
+        },
+        {
+          "name": "Darwin",
+          "amount": 30
+        },
+        {
+          "name": "Chad",
+          "amount": 0
+        },
+        {
+          "name": "David",
+          "amount": 30
+        },
+        {
+          "name": "Jerome",
+          "amount": 0
+        },
+        {
+          "name": "El uno",
+          "amount": 0
+        },
+        {
+          "name": "Johnroo",
+          "amount": 0
+        }
+      ]
+    }
+  },
+  "summary": {
+    "pman": 730,
+    "hawak": 375
+  }
+}
