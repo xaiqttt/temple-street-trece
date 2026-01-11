@@ -1,4 +1,4 @@
-const API_URL = 'https://temple-street-trece.vercel.app/api';
+const API_URL = 'https://tst-northside-varrio.vercel.app/api';
 
 let isAdmin = false;
 let editMode = false;
