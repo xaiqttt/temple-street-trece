@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>SAL Northside Fund Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <!-- Intro Splash Screen -->
+    <div id="intro-screen" class="intro-screen">
+        <div class="intro-content">
+            <h1 class="intro-title">S.A.L</h1>
+            <h2 class="intro-subtitle">Northside Locos</h2>
+            <h2 class="intro-subtitle">Dirty South</h2>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-app" class="main-app" style="display: none;">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">SAL FUNDS</h1>
+                <button class="menu-btn" id="menu-btn">
+                    <span class="material-icons">menu</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation Menu -->
+        <nav id="nav-menu" class="nav-menu">
+            <button class="nav-close" id="nav-close">
+                <span class="material-icons">close</span>
+            </button>
+            <ul class="nav-list">
+                <li>
+                    <button class="nav-item active" data-view="calendar">
+                        <span class="material-icons">calendar_month</span>
+                        Calendar
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-item" data-view="members">
+                        <span class="material-icons">groups</span>
+                        Members
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-item" data-view="stats">
+                        <span class="material-icons">analytics</span>
+                        Statistics
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Calendar View -->
+            <div id="calendar-view" class="view active">
+                <div class="view-header">
+                    <h2 class="view-title">Fund Calendar</h2>
+                    <div class="year-selector">
+                        <button class="year-btn" id="prev-year">
+                            <span class="material-icons">chevron_left</span>
+                        </button>
+                        <span class="current-year" id="current-year">2026</span>
+                        <button class="year-btn" id="next-year">
+                            <span class="material-icons">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="calendar-grid" id="calendar-grid">
+                    <!-- Calendar months will be generated here -->
+                </div>
+            </div>
+
+            <!-- Month Detail View -->
+            <div id="month-view" class="view">
+                <div class="view-header">
+                    <button class="back-btn" id="back-to-calendar">
+                        <span class="material-icons">arrow_back</span>
+                    </button>
+                    <h2 class="view-title" id="month-title">January 2026</h2>
+                </div>
+
+                <div class="month-summary" id="month-summary">
+                    <!-- Summary cards -->
+                </div>
+
+                <div class="payment-list" id="payment-list">
+                    <!-- Payment items by rank -->
+                </div>
+            </div>
+
+            <!-- Members View -->
+            <div id="members-view" class="view">
+                <div class="view-header">
+                    <h2 class="view-title">All Members</h2>
+                </div>
+                
+                <div class="members-container" id="members-container">
+                    <!-- Members grouped by rank -->
+                </div>
+            </div>
+
+            <!-- Stats View -->
+            <div id="stats-view" class="view">
+                <div class="view-header">
+                    <h2 class="view-title">Statistics</h2>
+                </div>
+                
+                <div class="stats-container" id="stats-container">
+                    <!-- Statistics cards -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div id="loading" class="loading-overlay" style="display: none;">
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
